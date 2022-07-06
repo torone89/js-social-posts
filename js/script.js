@@ -128,31 +128,61 @@ ${stampo.contenuto}
 </div>
 </div>`
 
-    // Richiamo le classi da usare nel  bottone
-    const button = document.querySelectorAll(".like-button.js-like-button");
 
-    // Aggiungo un funzione e creo  unaddeventListner 
-    button.forEach((element) => {
-        let likeCountElement = document.getElementById(`like-counter-${stampo.likes}`);
-
-        element.addEventListener("click", function () {
-
-            // Faccioscomparire L'elemento a seconda
-
-            if (element.classList.contains('like-button--liked')) {
-                element.classList.remove('like-button--liked');
-
-            } else {
-                element.classList.add('like-button--liked');
-                likeCountElement = stampo.likes + 1
-            }
-
-        });
-    })
 }
 
 // #Milestone 3
 // Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
 
+const bottoneLike = document.querySelectorAll('.js-like-button');
+const contatoreLIke = document.querySelectorAll('.js-likes-counter');
 
-// If the post is not already liked, change the button color and increment the likes counter by one. Viceversa, do the opposite.
+
+for (let i = 0; i < bottoneLike.length; i++) {
+    const correnteBottone = bottoneLike[i];
+    correnteBottone.addEventListener('click', () => {
+
+        correnteBottone.classList.add('like-button--liked');
+        const currentCounter = contatoreLIke[i];
+        let currentLikes = post[i].likes;
+        currentCounter.innerText = ++currentLikes;
+    })
+}
+
+
+// Richiamo le classi da usare nel  bottone
+// const button = document.querySelectorAll(".like-button.js-like-button");
+
+// const likeCounters = document.querySelectorAll('.js-likes-counter');
+
+// // Aggiungo un funzione e creo  unaddeventListner 
+// button.forEach((element) => {
+//     for (let i = 0; i < likeCounters.length; i++) {
+//         const currentCounter = likeCounters[i];
+//         let currentLikes = likeCounters[i];
+//         element.addEventListener("click", function () {
+
+
+//             const currentCounter = likeCounters[i];
+//             let currentLikes = parseInt(post[i].likes);
+//             currentCounter.innerText = ++currentLikes;
+//             element.classList.add('like-button--liked');
+//             // Faccioscomparire L'elemento a seconda
+
+//             // if (element.classList.contains('like-button--liked')) {
+//             //     element.classList.remove('like-button--liked');
+//             //     currentLikes = parseInt(post[i].likes);
+//             //     currentCounter.innerText = --currentLikes;
+
+//             // } else {
+//             //     element.classList.add('like-button--liked');
+
+//             //     currentLikes = parseInt(post[i].likes);
+//             //     currentCounter.innerText = ++currentLikes;
+
+//             // }
+//         });
+//     }
+// })
+
+
