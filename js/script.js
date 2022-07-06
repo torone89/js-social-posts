@@ -127,4 +127,32 @@ ${stampo.contenuto}
   </div>
 </div>
 </div>`
+
+    // Richiamo le classi da usare nel  bottone
+    const button = document.querySelectorAll(".like-button.js-like-button");
+
+    // Aggiungo un funzione e creo  unaddeventListner 
+    button.forEach((element) => {
+        let likeCountElement = document.getElementById(`like-counter-${stampo.likes}`);
+
+        element.addEventListener("click", function () {
+
+            // Faccioscomparire L'elemento a seconda
+
+            if (element.classList.contains('like-button--liked')) {
+                element.classList.remove('like-button--liked');
+
+            } else {
+                element.classList.add('like-button--liked');
+                likeCountElement = stampo.likes + 1
+            }
+
+        });
+    })
 }
+
+// #Milestone 3
+// Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
+
+
+// If the post is not already liked, change the button color and increment the likes counter by one. Viceversa, do the opposite.
