@@ -53,7 +53,7 @@ const post = [
 
   },
   {
-    idpost: 3,
+    idpost: 4,
     autore: "Marta Nerbi",
     imgautore: " ",
     data: "07-03-2022",
@@ -64,7 +64,7 @@ const post = [
 
   },
   {
-    idpost: 4,
+    idpost: 5,
     autore: "Giuseppe Nardi",
     imgautore: "https://unsplash.it/600/300?image=12",
     data: "07-02-2022",
@@ -75,7 +75,7 @@ const post = [
 
   },
   {
-    idpost: 5,
+    idpost: 6,
     autore: "Laura Rossi",
     imgautore: "https://unsplash.it/600/300?image=40",
     data: "07-01-2022",
@@ -96,43 +96,72 @@ console.log(post);
 // Recupero il container dadl Dom dove sucessivamente stampare la mia card
 const container = document.getElementById('container');
 
+// FUNZIONE CAMBIO  DATA AMERICANA => ITALIANA
+// const renderPicture = author => {
+//   const getIntials = autre=> {
+//     let iniziali = ''
+//     const parole = autore.split(' ')
+//     for (const word of parole)
+//       iniziali += word[0].toLocaleUpperCase();
+
+//   }
+//   const { imgautore, nome } = author
+//   if (imgautore) return `   <img class="profile-pic" src="${imgautore}" alt="${nome}" />`
+//   else {
+//     const iniziali = getIntials(nome);
+//     return `<div class="profile-pic-default">${iniziali}</div>`
+//   }
+
+// }
+
+// # ****BONUS**
+//  1. Formattare le date in formato italiano (gg/mm/aaaa)
+const formateDate = dateString => {
+
+  const dateArray = dateString.split('-');
+  const [mese, giorno, anno] = dateArray
+  return `${giorno}/${mese}/${anno}`
+}
+
+
 // const { idpost, autore, imgautore, data, contenuto, img, likes } = datiCard
 
 for (let i = 0; i < post.length; i++) {
   const stampo = post[i];
 
+  // Destructuring
+  const { idpost, autore, imgautore, data, contenuto, img, likes } = stampo
+
   container.innerHTML += `<div class="post">
 <div class="post__header">
   <div class="post-meta">
     <div class="post-meta__icon">
-      <img class="profile-pic" src="${stampo.imgautore}" alt="${stampo.autore}" />
+      <img class="profile-pic" src="${(imgautore)}" alt="${autore}" />
     </div>
     <div class="post-meta__data">
-      <div class="post-meta__author">${stampo.autore}</div>
-      <div class="post-meta__time">${stampo.data}</div>
+      <div class="post-meta__author">${autore}</div>
+      <div class="post-meta__time">${formateDate(data)}</div>
     </div>
   </div>
 </div>
 <div class="post__text">
-${stampo.contenuto}
+${contenuto}
 </div>
 <div class="post__image">
-  <img src="${stampo.img}" alt="Imaggine n ${stampo.id}" />
+  <img src="${img}" alt="Imaggine n ${idpost}" />
 </div>
 <div class="post__footer">
   <div class="likes js-likes">
     <div class="likes__cta">
-      <a class="like-button js-like-button" href="#" data-postid="${stampo.id}">
+      <a class="like-button js-like-button" href="#" data-postid="${idpost}">
         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
         <span class="like-button__label">Mi Piace</span>
       </a>
     </div>
-    <div class="likes__counter">Piace a<b id="like-counter-1" class="js-likes-counter">${stampo.likes}</b> persone</div>
+    <div class="likes__counter">Piace a <b id="like-counter-1" class="js-likes-counter">${likes}</b> persone</div>
   </div>
 </div>
 </div>`
-
-
 }
 
 // #Milestone 3
@@ -170,8 +199,12 @@ console.log(contatoreLike)
 
 // Bottoni like cambio colore e contatore
 for (let i = 0; i < post.length; i++) {
-  bottoneLike[i].addEventListener('click', function () {
+  bottoneLike[i].addEventListener('click', function (event) {
 
+    // Blocco il comportamento di default dell'<a> e non faccio fare refresh alla pagina
+    event.preventDefault()
+
+    // 
     const posted = post[i]
     console.log(posted.likes)
 
@@ -184,9 +217,11 @@ for (let i = 0; i < post.length; i++) {
       posted.likes++
       posted.is_liked = true
     }
+
     // Stampo  i liker in pagina 
     contatoreLike[i].innerHTML = posted.likes
     console.log(posted.likes)
+
     // Controllo se è presente la classe "like-button-list" e aggiungo e rimuovo la classse
     if (bottoneLike[i].classList.contains('like-button--liked')) {
       bottoneLike[i].classList.remove('like-button--liked');
